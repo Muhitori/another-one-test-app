@@ -1,39 +1,40 @@
-import React, { useContext } from 'react';
-import Container from '@mui/material/Container';
+import React from 'react';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { UIContext } from '../../Unknown/UIContext';
+import { Typography } from '@mui/material';
+import SignInForm from './SignInForm';
+import BuildingImage from '../images/building.png';
+import VoypostLogo from '../images/voypost.png';
 
 const SignInScreen: React.FC = () => {
-  const { setAlert } = useContext(UIContext);
-
-  const handleSignIn = React.useCallback(async () => {
-    setAlert({
-      show: true,
-      severity: 'info',
-      message: 'Sign in button was clicked.',
-    });
-  }, [setAlert]);
-
   return (
     <>
-      <Box
-        height="100vh"
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Container fixed maxWidth="sm">
-          <Grid container>
-            <Grid item xs={12}>
-              <Button type="button" onClick={handleSignIn}>
-                Sign in
-              </Button>
-            </Grid>
-          </Grid>
-        </Container>
+      <Box display="flex">
+        <Box
+          maxHeight="100vh"
+          component="img"
+          src={BuildingImage}
+          alt="building"
+        />
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          width="100%"
+        >
+          <Box
+            height="30px"
+            width="150px"
+            component="img"
+            src={VoypostLogo}
+            alt="voypost logo"
+            margin="5rem 0"
+          />
+          <Typography variant="h1" mb={5}>
+            Login
+          </Typography>
+          <SignInForm />
+        </Box>
       </Box>
     </>
   );
