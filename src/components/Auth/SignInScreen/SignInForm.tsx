@@ -5,7 +5,7 @@ import { IconButton, InputAdornment, TextField } from '@mui/material';
 import * as Yup from 'yup';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { useFirebaseApp } from 'reactfire';
-import { UIContext } from '../../Unknown/UIContext';
+import { UIContext } from '../../../UIContext';
 import useStyles from './styles';
 
 const validationSchema = Yup.object().shape({
