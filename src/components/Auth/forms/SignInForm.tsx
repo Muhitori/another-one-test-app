@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -29,6 +29,12 @@ const SignInForm: React.FC = () => {
   const { setAlert } = useContext(UIContext);
 
   const [isDisabled, setDisabled] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      setDisabled(false);
+    };
+  }, []);
 
   const handleSignIn = useCallback(
     async (formData) => {

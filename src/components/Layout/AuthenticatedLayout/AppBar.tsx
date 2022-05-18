@@ -1,8 +1,8 @@
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import MiuAppBar from '@mui/material/AppBar';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useFirebaseApp } from 'reactfire';
+import React, { useCallback, useEffect, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useFirebaseApp, useUser } from 'reactfire';
 import clearFirestoreCache from '../../../common/clearFirestoreCache';
 import useStyles from './styles';
 
@@ -10,23 +10,11 @@ const AppBar: React.FC = () => {
   const classes = useStyles();
 
   const firebase = useFirebaseApp();
-  const [username, setUsername] = useState<string | null | undefined>(null);
+  const { data: user, hasEmitted } = useUser();
+  const [avatar, setAvatar] = useState<string | undefined>(undefined);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-
-  useEffect(() => {
-    // check if username has been updated
-    setTimeout(() => {
-      firebase
-        .auth()
-        .currentUser?.reload()
-        .then(() => {
-          const refreshedUser = firebase.auth().currentUser;
-          setUsername(refreshedUser?.displayName);
-        });
-    }, 100);
-  }, [firebase]);
 
   const handleAvatarClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -41,14 +29,20 @@ const AppBar: React.FC = () => {
     clearFirestoreCache();
   }, [firebase]);
 
-  const avatar = useMemo(() => {
-    if (username) {
-      const [firstName, lastName] = username.split(' ');
-      return `https://ui-avatars.com/api/?name=${firstName}+${lastName}`;
-    }
+  useEffect(() => {
+    const getAvatar = async () => {
+      const username = user.displayName;
 
-    return 'https://ui-avatars.com/api/?name=U';
-  }, [username]);
+      if (username) {
+        const [firstName, lastName] = username.split(' ');
+        setAvatar(`https://ui-avatars.com/api/?name=${firstName}+${lastName}`);
+        return;
+      }
+
+      setAvatar('https://ui-avatars.com/api/?name=U');
+    };
+    setTimeout(() => getAvatar(), 1000);
+  }, [hasEmitted, user.displayName]);
 
   return (
     <MiuAppBar className={classes.appBar}>

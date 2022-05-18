@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -14,29 +14,31 @@ const isCapitalized = (name: string | undefined) => {
   return firstLetter === firstLetter.toUpperCase();
 };
 
+const validateFullName = (fullName: string | undefined) => {
+  const nameArray = fullName?.split(' ');
+  if (!nameArray) return false;
+
+  const isOnlyFirstAndLastName = nameArray?.length !== 2;
+
+  if (isOnlyFirstAndLastName) {
+    return false;
+  }
+
+  const [firstName, lastName] = nameArray;
+
+  if (isCapitalized(firstName) && isCapitalized(lastName)) {
+    return true;
+  }
+  return false;
+};
+
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required('Please enter email.')
     .email('Email field does not match requirements'),
   username: Yup.string()
     .required('Please enter your name.')
-    .test('test-username', 'Please enter your full name.', (fullName) => {
-      const nameArray = fullName?.split(' ');
-      if (!nameArray) return false;
-
-      const isOnlyFirstAndLastName = nameArray?.length !== 2;
-
-      if (isOnlyFirstAndLastName) {
-        return false;
-      }
-
-      const [firstName, lastName] = nameArray;
-
-      if (isCapitalized(firstName) && isCapitalized(lastName)) {
-        return true;
-      }
-      return false;
-    }),
+    .test('test-username', 'Please enter your full name.', validateFullName),
   password: Yup.string()
     .required('No password provided.')
     .min(12, 'Password is too short - should be 12 chars minimum.'),
@@ -60,6 +62,13 @@ const SignUpForm: React.FC = () => {
   const [isDisabled, setDisabled] = useState(false);
 
   const [error, setError] = useState<null | string>(null);
+
+  useEffect(() => {
+    return () => {
+      setDisabled(false);
+      setError(null);
+    };
+  }, []);
 
   const handleSignUp = useCallback(
     async (formData) => {
