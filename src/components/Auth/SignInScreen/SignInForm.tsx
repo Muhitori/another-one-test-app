@@ -4,6 +4,7 @@ import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import * as Yup from 'yup';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
+import { useFirebaseApp } from 'reactfire';
 import { UIContext } from '../../Unknown/UIContext';
 import useStyles from './styles';
 
@@ -24,21 +25,34 @@ const initialValues = {
 
 const SignInForm: React.FC = () => {
   const classes = useStyles();
+  const firebase = useFirebaseApp();
   const { setAlert } = useContext(UIContext);
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isDisabled, setDisabled] = useState(false);
 
   const toggleShowPassword = useCallback(() => {
     setShowPassword(!showPassword);
   }, [showPassword]);
 
-  const handleSignIn = useCallback(async () => {
-    setAlert({
-      show: true,
-      severity: 'info',
-      message: 'Sign in button was clicked.',
-    });
-  }, [setAlert]);
+  const handleSignIn = useCallback(
+    async (formData) => {
+      try {
+        setDisabled(true);
+        const { email, password } = formData;
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+      } catch (err) {
+        setAlert({
+          show: true,
+          severity: 'error',
+          message: 'Something went wrong.',
+        });
+      } finally {
+        setDisabled(false);
+      }
+    },
+    [firebase, setAlert],
+  );
 
   return (
     <Formik
@@ -90,7 +104,12 @@ const SignInForm: React.FC = () => {
             </>
           )}
         </Field>
-        <Button fullWidth variant="contained" type="submit">
+        <Button
+          fullWidth
+          variant="contained"
+          type="submit"
+          disabled={isDisabled}
+        >
           Log in
         </Button>
       </Form>
