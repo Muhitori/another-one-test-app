@@ -11,6 +11,7 @@ interface AlertProps {
   show: boolean;
   severity?: AlertColor;
   message?: string;
+  style?: React.CSSProperties;
 }
 
 export const UIContextProvider: React.FC = ({ children }) => {
@@ -18,6 +19,7 @@ export const UIContextProvider: React.FC = ({ children }) => {
     show: false,
     severity: 'info',
     message: '',
+    style: {},
   });
   const handleClose = () =>
     setAlert({
@@ -27,7 +29,12 @@ export const UIContextProvider: React.FC = ({ children }) => {
   return (
     <UIContext.Provider value={{ setAlert }}>
       {children}
-      <Snackbar open={alert.show} autoHideDuration={4000} onClose={handleClose}>
+      <Snackbar
+        style={alert.style}
+        open={alert.show}
+        autoHideDuration={4000}
+        onClose={handleClose}
+      >
         <Alert elevation={6} variant="filled" severity={alert.severity}>
           {alert.message}
         </Alert>

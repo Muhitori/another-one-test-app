@@ -11,6 +11,10 @@ const defaultTheme = createTheme({
       fontSize: 40,
       fontWeight: 700,
     },
+    h6: {
+      fontSize: 15,
+      fontWeight: 700,
+    },
   },
 });
 

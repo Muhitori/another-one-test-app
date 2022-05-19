@@ -1,8 +1,8 @@
 import { Box, Button, Menu, MenuItem } from '@mui/material';
 import MiuAppBar from '@mui/material/AppBar';
-import React, { useCallback, useMemo } from 'react';
-import { useFirebaseApp, useUser } from 'reactfire';
+import React, { useCallback, useEffect, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useFirebaseApp, useUser } from 'reactfire';
 import clearFirestoreCache from '../../../common/clearFirestoreCache';
 import useStyles from './styles';
 
@@ -10,12 +10,13 @@ const AppBar: React.FC = () => {
   const classes = useStyles();
 
   const firebase = useFirebaseApp();
-  const user = useUser();
+  const { data: user, hasEmitted } = useUser();
+  const [avatar, setAvatar] = useState<string | undefined>(undefined);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleAvatarClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -23,27 +24,31 @@ const AppBar: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const logout = useCallback(async () => {
+  const handleLogOut = useCallback(async () => {
     await firebase.auth().signOut();
     clearFirestoreCache();
   }, [firebase]);
 
-  const avatar = useMemo(() => {
-    const { displayName: username } = user.data;
+  useEffect(() => {
+    const getAvatar = async () => {
+      const username = user.displayName;
 
-    if (username) {
-      const [firstName, lastName] = username.split(' ');
-      return `https://ui-avatars.com/api/?name=${firstName}+${lastName}`;
-    }
+      if (username) {
+        const [firstName, lastName] = username.split(' ');
+        setAvatar(`https://ui-avatars.com/api/?name=${firstName}+${lastName}`);
+        return;
+      }
 
-    return 'https://ui-avatars.com/api/?name=U';
-  }, [user]);
+      setAvatar('https://ui-avatars.com/api/?name=U');
+    };
+    setTimeout(() => getAvatar(), 1000);
+  }, [hasEmitted, user.displayName]);
 
   return (
     <MiuAppBar className={classes.appBar}>
       <MenuIcon />
       <Box>
-        <Button onClick={handleClick}>
+        <Button onClick={handleAvatarClick}>
           <Box
             component="img"
             src={avatar}
@@ -61,7 +66,7 @@ const AppBar: React.FC = () => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={logout}>Log out</MenuItem>
+          <MenuItem onClick={handleLogOut}>Log out</MenuItem>
         </Menu>
       </Box>
     </MiuAppBar>
