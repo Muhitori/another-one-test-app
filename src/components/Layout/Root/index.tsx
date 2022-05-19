@@ -4,8 +4,9 @@ import { useUser } from 'reactfire';
 import AuthenticatedLayout from '../AuthenticatedLayout';
 import GuestLayout from '../GuestLayout';
 import NotFoundScreen from '../../Pages/NotFoundScreen';
-import AuthScreen from '../../Auth';
 import HomeScreen from '../../Pages/HomeScreen';
+import SignInScreen from '../../Auth/SignInScreen';
+import SignUpScreen from '../../Auth/SignUpScreen';
 
 const Root: React.FC = () => {
   const {
@@ -44,7 +45,9 @@ const Root: React.FC = () => {
   return (
     <GuestLayout>
       <Switch>
-        <Route path="*" component={AuthScreen} />
+        <Route exact path="/login" component={SignInScreen} />
+        <Route exact path="/register" component={SignUpScreen} />
+        <Route path="*" component={() => <Redirect to="/login" />} />
       </Switch>
     </GuestLayout>
   );

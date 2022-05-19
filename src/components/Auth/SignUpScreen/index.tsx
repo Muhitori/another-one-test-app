@@ -3,10 +3,10 @@ import { Box, Button, Typography } from '@mui/material';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { useFirebaseApp } from 'reactfire';
-import useStyles from '../styles';
-import PasswordInput from './PasswordInput';
-import TextInput from './TextInput';
 import { UIContext } from '../../../UIContext';
+import PasswordInput from '../../common/PasswordInput';
+import TextInput from '../../common/TextInput';
+import useStyles from '../styles';
 
 const isCapitalized = (name: string | undefined) => {
   if (!name) return false;
@@ -54,7 +54,7 @@ const initialValues = {
   confirmPassword: '',
 };
 
-const SignUpForm: React.FC = () => {
+const SignUpScreen: React.FC = () => {
   const classes = useStyles();
   const firebase = useFirebaseApp();
   const { setAlert } = useContext(UIContext);
@@ -84,14 +84,20 @@ const SignUpForm: React.FC = () => {
         const response = await firebase
           .auth()
           .createUserWithEmailAndPassword(email, password);
-
         await response.user?.updateProfile({
           displayName: username,
         });
+
         setAlert({
           show: true,
           severity: 'info',
           message: 'Welcome on board 🚀',
+          style: {
+            position: 'absolute',
+            left: '50%',
+            bottom: '0',
+            transform: 'translate(-50%)',
+          },
         });
       } catch ({ message }) {
         const errorMessage = message as string;
@@ -119,14 +125,20 @@ const SignUpForm: React.FC = () => {
         onSubmit={handleSignUp}
       >
         <Form className={classes.form}>
-          <TextInput name="email" label="Email" />
-          <TextInput name="username" label="Full name" />
+          <TextInput className={classes.filed} name="email" label="Email" />
+          <TextInput
+            className={classes.filed}
+            name="username"
+            label="Full name"
+          />
           <PasswordInput
+            className={classes.filed}
             name="password"
             label="Password"
             onFocus={handleFocus}
           />
           <PasswordInput
+            className={classes.filed}
             name="confirmPassword"
             label="Repeat password"
             onFocus={handleFocus}
@@ -146,4 +158,4 @@ const SignUpForm: React.FC = () => {
   );
 };
 
-export default SignUpForm;
+export default SignUpScreen;

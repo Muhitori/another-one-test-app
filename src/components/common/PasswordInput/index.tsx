@@ -2,16 +2,20 @@ import React, { useCallback, useState } from 'react';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { TextField, InputAdornment, IconButton } from '@mui/material';
 import { Field, FieldProps, ErrorMessage } from 'formik';
-import useStyles from '../styles';
 
 interface Props {
   name: string;
   label?: string;
+  className?: string;
   onFocus?: () => void;
 }
 
-const PasswordInput: React.FC<Props> = ({ name, label, onFocus }) => {
-  const classes = useStyles();
+const PasswordInput: React.FC<Props> = ({
+  name,
+  label,
+  className,
+  onFocus,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = useCallback(() => {
@@ -24,7 +28,7 @@ const PasswordInput: React.FC<Props> = ({ name, label, onFocus }) => {
         <>
           <TextField
             fullWidth
-            className={classes.filed}
+            className={className}
             variant="filled"
             label={label}
             type={showPassword ? 'text' : 'password'}

@@ -4,10 +4,10 @@ import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useFirebaseApp } from 'reactfire';
 import { Box } from '@mui/material';
+import PasswordInput from '../../common/PasswordInput';
+import TextInput from '../../common/TextInput';
 import { UIContext } from '../../../UIContext';
 import useStyles from '../styles';
-import PasswordInput from './PasswordInput';
-import TextInput from './TextInput';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -23,7 +23,7 @@ const initialValues = {
   password: '',
 };
 
-const SignInForm: React.FC = () => {
+const SignInScreen: React.FC = () => {
   const classes = useStyles();
   const firebase = useFirebaseApp();
   const { setAlert } = useContext(UIContext);
@@ -41,6 +41,7 @@ const SignInForm: React.FC = () => {
       try {
         setDisabled(true);
         const { email, password } = formData;
+
         await firebase.auth().signInWithEmailAndPassword(email, password);
       } catch ({ message }) {
         const errorMessage = message as string;
@@ -64,8 +65,12 @@ const SignInForm: React.FC = () => {
         onSubmit={handleSignIn}
       >
         <Form className={classes.form}>
-          <TextInput name="email" label="Email" />
-          <PasswordInput name="password" label="Password" />
+          <TextInput className={classes.filed} name="email" label="Email" />
+          <PasswordInput
+            className={classes.filed}
+            name="password"
+            label="Password"
+          />
           <Button
             fullWidth
             variant="contained"
@@ -80,4 +85,4 @@ const SignInForm: React.FC = () => {
   );
 };
 
-export default SignInForm;
+export default SignInScreen;

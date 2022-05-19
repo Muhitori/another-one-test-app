@@ -1,22 +1,21 @@
 import { TextField } from '@mui/material';
 import { Field, FieldProps, ErrorMessage } from 'formik';
 import React from 'react';
-import useStyles from '../styles';
 
 interface Props {
   name: string;
   label?: string;
+  className?: string;
 }
 
-const TextInput: React.FC<Props> = ({ name, label }) => {
-  const classes = useStyles();
+const TextInput: React.FC<Props> = ({ name, label, className }) => {
   return (
     <Field name={name}>
       {({ field }: FieldProps) => (
         <>
           <TextField
             fullWidth
-            className={classes.filed}
+            className={className}
             variant="filled"
             label={label}
             {...field}
