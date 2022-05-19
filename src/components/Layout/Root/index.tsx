@@ -3,9 +3,9 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { useUser } from 'reactfire';
 import AuthenticatedLayout from '../AuthenticatedLayout';
 import GuestLayout from '../GuestLayout';
-import HomeScreen from '../HomeScreen';
-import NotFoundScreen from '../NotFoundScreen';
+import NotFoundScreen from '../../Pages/NotFoundScreen';
 import SignInScreen from '../../Auth/SignInScreen';
+import HomeScreen from '../../Pages/HomeScreen';
 
 const Root: React.FC = () => {
   const {
@@ -44,7 +44,7 @@ const Root: React.FC = () => {
     <GuestLayout>
       <Switch>
         <Route exact path="/login" component={SignInScreen} />
-        <Route path="*" component={NotFoundScreen} />
+        <Route path="*" component={() => <Redirect to="/login" />} />
       </Switch>
     </GuestLayout>
   );

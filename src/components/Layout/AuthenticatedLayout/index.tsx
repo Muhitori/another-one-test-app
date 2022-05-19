@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import React from 'react';
+import AppBar from './AppBar';
 
 interface AuthenticatedLayoutProps {
   children: React.ReactElement;
@@ -7,8 +8,15 @@ interface AuthenticatedLayoutProps {
 
 const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({
   children,
-}: AuthenticatedLayoutProps) => {
-  return <Box>{children}</Box>;
+}) => {
+  return (
+    <Box display="flex" height="100%" flexDirection="column">
+      <AppBar />
+      <Box marginTop="3rem" flexGrow={1}>
+        {children}
+      </Box>
+    </Box>
+  );
 };
 
 export default AuthenticatedLayout;

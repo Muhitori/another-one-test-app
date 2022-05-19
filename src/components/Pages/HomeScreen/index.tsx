@@ -4,7 +4,7 @@ import React from 'react';
 const HomeScreen: React.FC = () => {
   return (
     <Box
-      height="100vh"
+      height="100%"
       display="flex"
       justifyContent="center"
       alignItems="center"
