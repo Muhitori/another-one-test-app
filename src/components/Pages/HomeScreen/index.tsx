@@ -6,7 +6,7 @@ const HomeScreen: React.FC = () => {
   const history = useHistory();
 
   const handleFlatClick = () => {
-    history.push('/flat');
+    history.push('/flats');
   };
 
   return (

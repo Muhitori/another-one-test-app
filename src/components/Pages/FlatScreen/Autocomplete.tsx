@@ -40,6 +40,7 @@ const Autocomplete: React.FC<Props> = ({
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
+                  // idk how handle clicks, just used string as it is
                   onClick={() =>
                     handleSelect({ label: inputValue, value: inputValue })
                   }
