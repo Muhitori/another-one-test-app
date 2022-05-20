@@ -17,7 +17,7 @@ const HomeScreen: React.FC = () => {
       alignItems="center"
     >
       <Button variant="contained" onClick={handleFlatClick}>
-        Flat
+        Explore flats
       </Button>
     </Box>
   );

@@ -14,14 +14,20 @@ export class FlatService {
   }
 
   static async getAll(): Promise<Flat[]> {
-    const snapshot = await this.firestore.collection('flats').get();
+    const snapshot = await this.firestore
+      .collection('flats')
+      .orderBy('createdAt', 'desc')
+      .limit(20)
+      .get();
     return this.getFlatsFormSnapshot(snapshot);
   }
 
-  static async getByCountry(address: string): Promise<Flat[]> {
+  static async getByAddress(address: string): Promise<Flat[]> {
     const snapshot = await this.firestore
       .collection('flats')
       .where('address', '==', address)
+      .orderBy('createdAt', 'desc')
+      .limit(20)
       .get();
 
     return this.getFlatsFormSnapshot(snapshot);
