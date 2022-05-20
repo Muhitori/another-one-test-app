@@ -1,7 +1,14 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const HomeScreen: React.FC = () => {
+  const history = useHistory();
+
+  const handleFlatClick = () => {
+    history.push('/flat');
+  };
+
   return (
     <Box
       height="100%"
@@ -9,7 +16,9 @@ const HomeScreen: React.FC = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <Typography variant="h1">Home page</Typography>
+      <Button variant="contained" onClick={handleFlatClick}>
+        Flat
+      </Button>
     </Box>
   );
 };
