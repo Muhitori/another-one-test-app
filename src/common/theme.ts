@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material';
 
 const defaultTheme = createTheme({
+  spacing: 6,
   palette: {
     primary: {
       main: '#F50057',

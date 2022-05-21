@@ -12,9 +12,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({
   return (
     <Box display="flex" height="100%" flexDirection="column">
       <AppBar />
-      <Box marginTop="3rem" flexGrow={1}>
-        {children}
-      </Box>
+      <Box flexGrow={1}>{children}</Box>
     </Box>
   );
 };

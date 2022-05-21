@@ -6,8 +6,10 @@ import { googleAutocomplete } from '../../../services/autocomplete.service';
 import { Flat } from '../../../types';
 import Autocomplete, { AutocompleteOption } from './Autocomplete';
 import FlatList from './FlatList';
+import useStyles from './styles';
 
 const FlatScreen: React.FC = () => {
+  const classes = useStyles();
   const history = useHistory();
 
   const [flats, setFlats] = useState<Flat[] | null>(null);
@@ -63,12 +65,14 @@ const FlatScreen: React.FC = () => {
 
   return (
     <Box ml={2} mt={2} height="100%">
-      <Autocomplete
-        inputValue={inputValue}
-        handleChange={handleChange}
-        handleSelect={handleSelect}
-        options={options}
-      />
+      <Box className={classes.sticky}>
+        <Autocomplete
+          inputValue={inputValue}
+          handleChange={handleChange}
+          handleSelect={handleSelect}
+          options={options}
+        />
+      </Box>
       <Typography mt={2} mb={2} variant="h2">
         Flats to rent
       </Typography>
