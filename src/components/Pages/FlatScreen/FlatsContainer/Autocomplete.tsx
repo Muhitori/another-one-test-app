@@ -24,7 +24,7 @@ const Autocomplete: React.FC<Props> = ({
   return (
     <MiuAutocomplete
       freeSolo
-      sx={{ width: 500 }}
+      fullWidth
       disableClearable
       options={inputValue ? options.map((option) => option) : []}
       onChange={(event, value) => handleSelect(value as AutocompleteOption)}

@@ -8,20 +8,22 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { Flat } from '../../../types';
+import { Flat } from '../../../../types';
 import FlatImage from './images/flat.jpg';
 
 interface Props {
   flat: Flat;
+  handleDetailsClicked: (id: string, city: string) => void;
 }
 
 const FlatCard: React.FC<Props> = ({
-  flat: { price, address, description },
+  flat: { id, price, address, city, description },
+  handleDetailsClicked,
 }) => {
   return (
     <Card
       sx={{
-        width: 580,
+        width: '100%',
         display: 'flex',
         justifyContent: 'flex-start',
         marginBottom: 4,
@@ -53,7 +55,11 @@ const FlatCard: React.FC<Props> = ({
           </Typography>
         </CardContent>
         <CardActions sx={{ flexGrow: 1 }}>
-          <Button size="small" color="primary">
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => handleDetailsClicked(id, city)}
+          >
             Details
           </Button>
         </CardActions>

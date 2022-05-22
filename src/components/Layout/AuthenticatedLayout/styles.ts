@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     width: '100%',
     position: 'sticky',
-    height: '3rem',
+    height: theme.spacing(8),
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',

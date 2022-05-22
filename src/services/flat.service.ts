@@ -22,10 +22,10 @@ export class FlatService {
     return this.getFlatsFormSnapshot(snapshot);
   }
 
-  static async getByAddress(address: string): Promise<Flat[]> {
+  static async getByAddress(city: string): Promise<Flat[]> {
     const snapshot = await this.firestore
       .collection('flats')
-      .where('address', '==', address)
+      .where('city', '==', city)
       .orderBy('createdAt', 'desc')
       .limit(20)
       .get();

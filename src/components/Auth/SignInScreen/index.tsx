@@ -58,7 +58,7 @@ const SignInScreen: React.FC = () => {
   );
 
   return (
-    <Box display="flex" justifyContent="center" mb={15}>
+    <Box width="100%" display="flex" justifyContent="center" mb={15}>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
