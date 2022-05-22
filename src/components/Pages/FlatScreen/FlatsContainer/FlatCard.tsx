@@ -13,11 +13,11 @@ import FlatImage from './images/flat.jpg';
 
 interface Props {
   flat: Flat;
-  handleDetailsClicked: (id: string, city: string) => void;
+  handleDetailsClicked: (id: string) => void;
 }
 
 const FlatCard: React.FC<Props> = ({
-  flat: { id, price, address, city, description },
+  flat: { id, price, address, description },
   handleDetailsClicked,
 }) => {
   return (
@@ -58,7 +58,7 @@ const FlatCard: React.FC<Props> = ({
           <Button
             size="small"
             color="primary"
-            onClick={() => handleDetailsClicked(id, city)}
+            onClick={() => handleDetailsClicked(id)}
           >
             Details
           </Button>

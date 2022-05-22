@@ -36,11 +36,10 @@ const FlatsContainer: React.FC = () => {
   };
 
   const handleDetailsClicked = useCallback(
-    (id: string, city: string) => {
-      const query = city ? `?city=${city}` : '';
-      history.push(`/flats/${id}${query}`);
+    (id: string) => {
+      history.push(`/flats/${id}${location.search}`);
     },
-    [history],
+    [history, location.search],
   );
 
   useEffect(() => {

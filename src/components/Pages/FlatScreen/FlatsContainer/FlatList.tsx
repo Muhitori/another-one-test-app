@@ -5,7 +5,7 @@ import FlatCard from './FlatCard';
 
 interface Props {
   flats: Flat[] | null;
-  handleDetailsClicked: (id: string, city: string) => void;
+  handleDetailsClicked: (id: string) => void;
 }
 
 const FlatList: React.FC<Props> = ({ flats, handleDetailsClicked }) => {
