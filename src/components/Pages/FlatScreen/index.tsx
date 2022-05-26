@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Filler from './Filler';
@@ -13,6 +13,7 @@ const FlatScreen: React.FC = () => {
         <FlatsContainer />
       </Grid>
       <Grid item xs={6}>
+        <Box />
         <Switch>
           <Route
             exact
